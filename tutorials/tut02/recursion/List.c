@@ -68,56 +68,35 @@ void displayList(List lst) {
 }
 
 int listLength(List lst) {
-    // base case: list is empty => length must equal 1
-    if (lst == NULL)  {
-        return 0;
-    }
-    return 1 + listLength(lst->next);
-}
-
-int listCountOdds(List lst) {
-    // base case: list is empty => must have no odd numbers 
     if (lst == NULL) {
         return 0;
     }
-    // if current value is odd, add 1 to return value
-    if (lst->data % 2 != 0) {
-        return 1 + listCountOdds(lst->next);
+    return listLength(lst->next) + 1;
+}
+
+int listCountOdds(List lst) {
+    if (lst == NULL) {
+        return 0;
+    }
+    if (lst->data % 2 == 0) {
+        return listCountOdds(lst->next);
     }
     else {
-        return listCountOdds(lst->next);
+        return 1 + listCountOdds(lst->next);
     }
 }
 
 bool listIsSorted(List lst) {
-	// base case 1: list is empty => must be sorted
-	if (lst == NULL) {
-		return true;
-	}
-    // base case 2: list contains only one item => must be sorted
-	if (lst->next == NULL) {
-		return true;
-	}
-	// base case 3: list contains more than one item and 
-	// the first two items are not in ascending order
-	if (lst->data > lst->next->data) {
-		return false;
-	}
-	
-	return listIsSorted(lst->next);		
+    // BASE CASE 1
+    if (lst == NULL) return true;
+    if (lst->next == NULL) return true;
+    if (lst->data > lst->next->data) return false;
+    return listIsSorted(lst->next);
 }
 
 List listDelete(List lst, int val) {
-    // base case 1: if the list empty => can't delete anything
-    if (lst == NULL) {
-        return lst;
-    }
-    // base case 2: if val exists, return the list starting from the next node
-    if (lst->data == val) {
-        return lst->next;   
-    }
-    else {
-        lst->next = listDelete(lst->next, val);
-        return lst;
-    }
+    if (lst == NULL) return NULL;
+    if (lst->data == val) return lst->next;
+    lst->next = listDelete(lst->next, val);
+    return lst;
 }

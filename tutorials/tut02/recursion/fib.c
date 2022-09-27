@@ -1,11 +1,15 @@
 
 #include <stdio.h>
-
+#include <stdlib.h> 
+#include <assert.h>
 
 int fib(int n) {
+    assert(n >= 0);
+    // BASE CASES 
     if (n == 0) return 0;
     if (n == 1) return 1;
-    return fib(n - 1) + fib(n - 2);    
+    
+    return fib(n - 1) + fib(n - 2);
 }
 
 int main(int argc, char **argv) {
